@@ -4,4 +4,5 @@
     <string name="action_settings">Настройки</string>
     <string name="internet_error">Отсутсвует интернет соединение</string>
     <string name="network_error">Отсутсвует интернет соединение</string>
+    <string name="title_activity_artist_detail">Artist</string>
 </resources>

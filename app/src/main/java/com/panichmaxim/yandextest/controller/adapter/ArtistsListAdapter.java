@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.panichmaxim.yandextest.R;
 import com.panichmaxim.yandextest.model.db.DBArtist;
 import com.panichmaxim.yandextest.model.db.StringObject;
+import com.panichmaxim.yandextest.ui.ArtistDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,11 +65,11 @@ public class ArtistsListAdapter extends RecyclerView.Adapter<ArtistsListAdapter.
         String genres =  Stream.of(this.mNodes.get(position).getmGenres()).map((StringObject obj) -> obj.getString() + "; ").collect(Collectors.joining());
         holder.mGenre.setText(genres);
         holder.mInfo.setText(this.mNodes.get(position).getmAlbums() + " albums, " + this.mNodes.get(position).getmTracks() + " songs");
-//        holder.itemView.setOnClickListener((View view) -> {
-//            Intent intent = new Intent(mContext, ArtistDetailActivity.class);
-//            intent.putExtra(ArtistDetailActivity.ITEM_ID, mNodes.get(position).getmId());
-//            mContext.startActivity(intent);
-//        });
+        holder.itemView.setOnClickListener((View view) -> {
+            Intent intent = new Intent(mContext, ArtistDetailActivity.class);
+            intent.putExtra(ArtistDetailActivity.ITEM_ID, mNodes.get(position).getmId());
+            mContext.startActivity(intent);
+        });
     }
 
     @Override
