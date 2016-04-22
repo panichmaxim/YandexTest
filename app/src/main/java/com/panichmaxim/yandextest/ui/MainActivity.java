@@ -100,11 +100,8 @@ public class MainActivity extends BaseActivity  implements SwipeRefreshLayout.On
                                 Snackbar.make(mCoordinatorLayout, getResources().getString(R.string.network_error), Snackbar.LENGTH_LONG).show();
                             }
                         }
-                        ArrayList<DBArtist> savedData = new ArrayList<>(Realm.getInstance(App.getContext()).where(DBArtist.class).findAll());
-                        if (savedData != null) {
-                            mAdapter.setData(savedData);
-                            mAdapter.notifyDataSetChanged();
-                        }
+                        mAdapter.setData(new ArrayList<>(Realm.getInstance(App.getContext()).where(DBArtist.class).findAll()));
+                        mAdapter.notifyDataSetChanged();
                         hidePg();
                         mSwipeRefresh.setRefreshing(false);
                     }

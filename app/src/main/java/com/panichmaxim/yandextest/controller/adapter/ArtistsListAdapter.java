@@ -1,6 +1,7 @@
 package com.panichmaxim.yandextest.controller.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.panichmaxim.yandextest.R;
 import com.panichmaxim.yandextest.model.db.DBArtist;
+import com.panichmaxim.yandextest.model.db.StringObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +58,12 @@ public class ArtistsListAdapter extends RecyclerView.Adapter<ArtistsListAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.mImage.setImageDrawable(null);
+        ImageLoader.getInstance().displayImage(this.mNodes.get(position).getmCover().getmSmall(), holder.mImage);
         holder.mTitle.setText(this.mNodes.get(position).getmName());
-        holder.mGenre.setText(this.mNodes.get(position).getmGenres().toString());
+        String genres =  Stream.of(this.mNodes.get(position).getmGenres()).map((StringObject obj) -> obj.getString() + "; ").collect(Collectors.joining());
+        holder.mGenre.setText(genres);
+        holder.mInfo.setText(this.mNodes.get(position).getmAlbums() + " albums, " + this.mNodes.get(position).getmTracks() + " songs");
 //        holder.itemView.setOnClickListener((View view) -> {
 //            Intent intent = new Intent(mContext, ArtistDetailActivity.class);
 //            intent.putExtra(ArtistDetailActivity.ITEM_ID, mNodes.get(position).getmId());
