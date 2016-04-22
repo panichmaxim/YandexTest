@@ -9,19 +9,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import com.panichmaxim.yandextest.App;
 import com.panichmaxim.yandextest.R;
 import com.panichmaxim.yandextest.controller.adapter.ArtistsListAdapter;
 import com.panichmaxim.yandextest.controller.network.NetworkConstants;
 import com.panichmaxim.yandextest.controller.network.ServerApi;
-import com.panichmaxim.yandextest.controller.network.response.GetArtistsListResponse;
 import com.panichmaxim.yandextest.model.db.ArtistsConverter;
 import com.panichmaxim.yandextest.model.db.DBArtist;
-
+import com.panichmaxim.yandextest.model.network.NWArtist;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.realm.Realm;
@@ -68,8 +65,8 @@ public class MainActivity extends BaseActivity  implements SwipeRefreshLayout.On
 
     private void loadData() {
         mCompositeSubscription.add(NetworkConstants.getRestAdapter().create(ServerApi.class).getArtists()
-                .compose(provider.<GetArtistsListResponse>bindToLifecycle())
-                .map((GetArtistsListResponse response) -> ArtistsConverter.convertArtistsList(response.getArtists()))
+                .compose(provider.<List<NWArtist>>bindToLifecycle())
+                .map((List<NWArtist> response) -> ArtistsConverter.convertArtistsList(response))
                 .doOnNext((List<DBArtist> list) -> {
                             Realm realm = Realm.getInstance(App.getContext());
                             realm.beginTransaction();
